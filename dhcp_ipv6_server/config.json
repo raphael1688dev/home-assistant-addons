@@ -1,6 +1,6 @@
 {
   "name": "DHCP IPv6 server",
-  "version": "1.2",
+  "version": "1.2.1",
   "slug": "dhcp_ipv6_server",
   "description": "A simple DHCP IPv6 server",
   "url": "https://github.com/BohdanTkachenko/home-assistant-addons",
@@ -67,21 +67,21 @@
     "networks": [
       {
         "subnet": "str",
-        "ranges": ["str"],
-        "prefixes": ["str"],
-        "name_servers": ["str"],
-        "extra": ["str"]
+        "ranges": ["str?"],
+        "prefixes": ["str?"],
+        "name_servers": ["str?"],
+        "extra": ["str?"]
       }
     ],
     "hosts": [
       {
         "name": "str",
-        "client_id": "str",
-        "mac": "str",
-        "address": "str",
-        "prefixes": ["str"],
-        "name_servers": ["str"],
-        "extra": ["str"]
+        "client_id": "str?",
+        "mac": "str?",
+        "address": "str?",
+        "prefixes": ["str?"],
+        "name_servers": ["str?"],
+        "extra": ["str?"]
       }
     ]
   },
