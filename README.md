@@ -9,4 +9,4 @@
 
 ## Add-ons
 
-- [DHCP IPv6 Server](dhcp_server/README.md)
+- [DHCP IPv6 Server](dhcp_ipv6_server/README.md)
