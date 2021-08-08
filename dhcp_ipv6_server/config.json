@@ -85,5 +85,5 @@
       }
     ]
   },
-  "image": "homeassistant/{arch}-addon-dhcp_ipv6_server"
+  "image": "bohdantkachenko/{arch}-addon-dhcp_ipv6_server"
 }
