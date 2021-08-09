@@ -21,8 +21,9 @@ MAX_LEASE=$(bashio::config 'max_lease')
 } > "${CONFIG}"
 
 if bashio::config.has_value "extra"; then
-    for line in $(bashio::config 'extra|keys'); do
-        bashio::config "extra[${line}]" >> "${CONFIG}"
+    for i in $(bashio::config 'extra|keys'); do
+        LINE=$(bashio::config "extra[${i}]")
+        echo "$LINE" >> "${CONFIG}"
     done
 fi
 
@@ -35,22 +36,22 @@ for network in $(bashio::config 'networks|keys'); do
     echo "subnet6 ${SUBNET} {" >> "${CONFIG}"
 
     if bashio::config.has_value "networks[${network}].ranges"; then
-        for range in $(bashio::config "networks[${network}].ranges|keys"); do
-            RANGE=$(bashio::config "networks[${network}].ranges[${range}]")
+        for i in $(bashio::config "networks[${network}].ranges|keys"); do
+            RANGE=$(bashio::config "networks[${network}].ranges[${i}]")
             echo "  range6 ${RANGE};" >> "${CONFIG}"
         done
     fi
 
     if bashio::config.has_value "networks[${network}].prefixes"; then
-        for prefix in $(bashio::config "networks[${network}].prefixes|keys"); do
-            PREFIX=$(bashio::config "networks[${network}].prefixes[${prefix}]")
+        for i in $(bashio::config "networks[${network}].prefixes|keys"); do
+            PREFIX=$(bashio::config "networks[${network}].prefixes[${i}]")
             echo "  prefix6 ${PREFIX};" >> "${CONFIG}"
         done
     fi
 
     if bashio::config.has_value "networks[${network}].extra"; then
-        for line in $(bashio::config "networks[${network}].extra|keys"); do
-            echo "  $(bashio::config "networks[${network}].extra[${line}]")" >> "${CONFIG}"
+        for i in $(bashio::config "networks[${network}].extra|keys"); do
+            echo "  $(bashio::config "networks[${network}].extra[${i}]")" >> "${CONFIG}"
         done
     fi
 
@@ -82,8 +83,8 @@ for host in $(bashio::config 'hosts|keys'); do
     fi
 
     if bashio::config.has_value "hosts[${host}].prefixes"; then
-        for prefix in $(bashio::config "hosts[${host}].prefixes|keys"); do
-            PREFIX=$(bashio::config "hosts[${host}].prefixes[${prefix}]")
+        for i in $(bashio::config "hosts[${host}].prefixes|keys"); do
+            PREFIX=$(bashio::config "hosts[${host}].prefixes[${i}]")
             echo "  fixed-prefix6 ${PREFIX};" >> "${CONFIG}"
         done
     fi
@@ -94,8 +95,8 @@ for host in $(bashio::config 'hosts|keys'); do
     fi
 
     if bashio::config.has_value "hosts[${host}].extra"; then
-        for line in $(bashio::config "hosts[${host}].extra|keys"); do
-            echo "  $(bashio::config "hosts[${host}].extra[${line}]")" >> "${CONFIG}"
+        for i in $(bashio::config "hosts[${host}].extra|keys"); do
+            echo "  $(bashio::config "hosts[${host}].extra[${i}]")" >> "${CONFIG}"
         done
     fi
 
