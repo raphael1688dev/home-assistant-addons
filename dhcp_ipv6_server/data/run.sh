@@ -20,9 +20,11 @@ MAX_LEASE=$(bashio::config 'max_lease')
     echo "authoritative;"
 } > "${CONFIG}"
 
-for line in $(bashio::config 'extra|keys'); do
-    bashio::config "extra[${line}]" >> "${CONFIG}"
-done
+if bashio::config.has_value "extra"; then
+    for line in $(bashio::config 'extra|keys'); do
+        bashio::config "extra[${line}]" >> "${CONFIG}"
+    done
+fi
 
 # Create networks
 for network in $(bashio::config 'networks|keys'); do
