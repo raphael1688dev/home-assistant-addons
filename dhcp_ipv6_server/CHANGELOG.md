@@ -1,12 +1,8 @@
 # Changelog
 
-## 3.4
-
-- Added codenotary
-
 ## 3.3
 
-- More fixes
+- Added codenotary
 
 ## 3.2
 
