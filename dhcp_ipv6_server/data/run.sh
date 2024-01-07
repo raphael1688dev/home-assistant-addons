@@ -1,7 +1,7 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 set -e
 
-CONFIG="/data/dhcpd6.conf"
+CONFIG="/etc/dhcpd6.conf"
 LEASES="/data/dhcpd6.lease"
 
 bashio::log.info "Creating DHCP configuration..."
