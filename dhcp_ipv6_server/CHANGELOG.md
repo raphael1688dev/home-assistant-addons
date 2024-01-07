@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1
+
+- Fixed startup script
+- Added codenotary
+
 ## 3.0
 
 - Allign config with original add-on
