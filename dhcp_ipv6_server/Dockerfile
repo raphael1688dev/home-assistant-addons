@@ -5,7 +5,7 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 
 # Setup base
-RUN apk add --no-cache dhcp=~4.4.1
+RUN apk add --no-cache dhcp
 
 # Copy data
 COPY data/run.sh /
