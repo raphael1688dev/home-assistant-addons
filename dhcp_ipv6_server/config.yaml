@@ -17,7 +17,7 @@ options:
   default_lease: 86400
   max_lease: 172800
   domain: home.local
-  dns: 
+  dns:
     - 2001:4860:4860::8888
     - 2001:4860:4860::8844
   extra:
