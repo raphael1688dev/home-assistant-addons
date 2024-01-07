@@ -1,5 +1,5 @@
 ---
-version: "3.1"
+version: "3.2"
 slug: dhcp_ipv6_server
 name: DHCPv6 server
 description: A simple DHCPv6 server
