@@ -1,14 +1,16 @@
+---
+# yamllint disable rule:line-length rule:truthy
 name: Build add-on
 
 env:
   BUILD_ARGS: "--test"
-  MONITORED_FILES: "apparmor.txt build.json config.json Dockerfile data rootfs"
+  MONITORED_FILES: "apparmor.txt build.yaml config.yaml Dockerfile data rootfs"
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: ["master"]
   push:
-    branches: ["main"]
+    branches: ["master"]
 
 jobs:
   init:
@@ -20,20 +22,21 @@ jobs:
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4.1.1
 
       - name: Get changed files
         id: changed_files
-        uses: jitterbit/get-changed-files@v1
+        uses: masesgroup/retrieve-changed-files@v3.0.0
 
       - name: Get add-ons
         id: addons
         run: |
           declare -a addons
-          for addon in $(find ./ -name config.json | cut -d "/" -f2 | sort -u); do
+          for addon in $(find ./ -name config.yaml | cut -d "/" -f2 | sort -u); do
             addons+=("$addon");
           done
-          echo "::set-output name=addons::${addons[@]}"
+          echo "addons=${addons[@]}" >> "$GITHUB_OUTPUT"
+
       - name: Get changed add-ons
         id: changed_addons
         run: |
@@ -49,14 +52,16 @@ jobs:
               done
             fi
           done
+
           changed=$(echo ${changed_addons[@]} | rev | cut -c 2- | rev)
           if [[ -n ${changed} ]]; then
             echo "Changed add-ons: $changed";
-            echo "::set-output name=changed::true";
-            echo "::set-output name=addons::[$changed]";
+            echo "changed=true" >> "$GITHUB_OUTPUT";
+            echo "addons=[$changed]" >> "$GITHUB_OUTPUT";
           else
             echo "No add-on had any monitored files changed (${{ env.MONITORED_FILES }})";
           fi
+
   build:
     needs: init
     runs-on: ubuntu-latest
@@ -69,7 +74,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4.1.1
 
       - name: Get information
         id: info
@@ -81,36 +86,28 @@ jobs:
         id: check
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
-             echo "::set-output name=build_arch::true";
+             echo "build_arch=true" >> "$GITHUB_OUTPUT";
            else
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
           fi
-          version=$(jq -r '.version' "./${{ matrix.addon }}/config.json")
-          echo "::set-output name=version::${version}";
+
       - name: Set build arguments
         if: steps.check.outputs.build_arch == 'true'
         run: |
           if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
               echo "BUILD_ARGS=--docker-hub-check" >> $GITHUB_ENV;
           fi
+
       - name: Login to DockerHub
         if: env.BUILD_ARGS == '--docker-hub-check'
-        uses: docker/login-action@v1.10.0
+        uses: docker/login-action@v3.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        if: env.BUILD_ARGS == '--docker-hub-check'
-        uses: docker/login-action@v1.10.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build ${{ matrix.addon }} add-on
         if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@2021.07.0
+        uses: home-assistant/builder@2023.12.0
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
