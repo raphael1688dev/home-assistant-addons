@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.4
+
+- Fix builder
+
+## 2.3
+
+- Add workflows
+
+## 2.2
+
+- Fix manifests
+
 ## 2.1
 
 - Update Alpine to 3.19
