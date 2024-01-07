@@ -4,7 +4,6 @@ slug: dhcp_ipv6_server
 name: DHCPv6 server
 description: A simple DHCPv6 server
 url: https://github.com/martymarty004/home-assistant-addons
-codenotary: []
 advanced: true
 arch:
   - armhf
