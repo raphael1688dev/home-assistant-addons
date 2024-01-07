@@ -86,5 +86,5 @@
       }
     ]
   },
-  "image": "bohdantkachenko/{arch}-addon-dhcp_ipv6_server"
+  "image": "martymarty004/{arch}-addon-dhcp_ipv6_server"
 }
