@@ -47,19 +47,21 @@ schema:
   default_lease: int
   max_lease: int
   domain: str
-  dns: str?
-  extra: str?
+  dns: 
+    - str
+  extra: 
+    - str
   networks:
     - subnet: str
-      ranges: str?
-      prefixes: str?
-      name_servers: str?
-      extra: str?
+      ranges: str
+      prefixes: str
+      name_servers: str
+      extra: str
   hosts:
     - name: str
-      client_id: str?
-      mac: str?
-      address: str?
-      prefixes: str?
-      name_servers: str?
-      extra: str?
+      client_id: str
+      mac: str
+      address: str
+      prefixes: str
+      name_servers: str
+      extra: str
