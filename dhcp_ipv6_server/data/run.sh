@@ -8,7 +8,6 @@ bashio::log.info "Creating DHCP configuration..."
 
 # Create main config
 DEFAULT_LEASE=$(bashio::config 'default_lease')
-NAME_SERVERS=$(bashio::config 'name_servers|join(", ")')
 DOMAIN=$(bashio::config 'domain')
 MAX_LEASE=$(bashio::config 'max_lease')
 
@@ -19,6 +18,16 @@ MAX_LEASE=$(bashio::config 'max_lease')
     echo "max-lease-time ${MAX_LEASE};"
     echo "authoritative;"
 } > "${CONFIG}"
+
+# Create DNS Server List
+if [ "$(bashio::config 'dns')" ]
+then
+    DNS=$(bashio::config 'dns|join(", ")')
+    {
+        echo "option domain-name-servers ${DNS};";
+    } >> "${CONFIG}"
+fi
+
 
 if bashio::config.has_value "extra"; then
     for i in $(bashio::config 'extra|keys'); do
