@@ -1,17 +1,17 @@
 ---
-name: DHCP IPv6 server
 version: 2.5
 slug: dhcp_ipv6_server
+name: DHCP IPv6 server
 description: A simple DHCP IPv6 server
 url: https://github.com/martymarty004/home-assistant-addons
+advanced: true
+codenotary: []
 arch:
   - armhf
   - armv7
   - aarch64
   - amd64
   - i386
-advanced: true
-startup: system
 host_network: true
 image: martymarty004/{arch}-addon-dhcp_ipv6_server
 options:
@@ -62,4 +62,3 @@ schema:
       prefixes: str?
       name_servers: str?
       extra: str?
-      
