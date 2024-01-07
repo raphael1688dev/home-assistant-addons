@@ -1,11 +1,11 @@
-# Home Assistant Add-on: DHCP server
+# Home Assistant Add-on: DHCPv6 server
 
 ## Installation
 
 Follow these steps to get the add-on installed on your system:
 
 1. Navigate in your Home Assistant frontend to **Supervisor** -> **Add-on Store**.
-2. Find the "DHCP server" add-on and click it.
+2. Find the "DHCPv6 server" add-on and click it.
 3. Click on the "INSTALL" button.
 
 ## How to use
@@ -16,30 +16,41 @@ Follow these steps to get the add-on installed on your system:
 
 ## Configuration
 
-The DHCP server add-on can be tweaked to your likings. This section
+The DHCPv6 server add-on can be tweaked to your likings. This section
 describes each of the add-on configuration options.
 
 Example add-on configuration:
 
 ```yaml
-domain: mynetwork.local
-dns:
-  - 8.8.8.8
-  - 8.8.4.4
-default_lease: 86400
-max_lease: 172800
-networks:
-  - subnet: 192.168.1.0
-    netmask: 255.255.255.0
-    range_start: 192.168.1.100
-    range_end: 192.168.1.200
-    broadcast: 192.168.1.255
-    gateway: 192.168.1.1
-    interface: eth0
-hosts:
-  - name: webcam_xy
-    mac: aa:bb:ee:cc
-    ip: 192.168.1.40
+  domain: home.local
+  dns: 
+    - 2001:4860:4860::8888
+    - 2001:4860:4860::8844
+  default_lease: 86400
+  max_lease: 172800
+  extra:
+    - preferred-lifetime 604800;
+    - option dhcp-renewal-time 3600;
+    - option dhcp-rebinding-time 7200;
+    - allow leasequery;
+    - option dhcp6.info-refresh-time 21600;
+  networks:
+    - subnet: "3ffe:501:ffff:100::/64"
+      ranges:
+        - "3ffe:501:ffff:100::10 3ffe:501:ffff:100::11"
+      prefixes: "3ffe:501:ffff:100::, 3ffe:501:ffff:111:: /64"
+      extra: []
+  hosts:
+    - name: myclient
+      client_id: "00:01:00:01:00:04:93:e0:00:00:00:00:a2:a2"
+      addresses: "3ffe:501:ffff:100::1234"
+      prefixes: "3ffe:501:ffff:101::/64, 3ffe:501:ffff:102::/64"
+      name_servers: "3ffe:501:ffff:100:200:ff:fe00:4f4e"
+      extra: []
+    - name: otherclient
+      mac: "01:00:80:a2:55:67"
+      address: "3ffe:501:ffff:100::4321"
+      extra: []
 ```
 
 ### Option: `domain` (required)
@@ -50,7 +61,7 @@ Your network domain name, e.g., `mynetwork.local` or `home.local`
 
 The DNS servers your DHCP server gives to your clients. This option can
 contain a list of servers. By default, it is configured to have Google's
-public DNS servers: `"8.8.8.8", "8.8.4.4".
+public DNS servers: `2001:4860:4860::8888`, `2001:4860:4860::8844`.
 
 ### Option: `default_lease` (required)
 
@@ -62,55 +73,52 @@ Defaults to `86400`, which is one day.
 The max time in seconds that the IP is leased to your client.
 Defaults to `172800`, which is two days.
 
+### Option: `extra`
+
+Here you can add extra configuration for dhcpd to use, followed by a semicolon.
+The default values are the following:
+
+```yaml
+extra:
+    - preferred-lifetime 604800;
+    - option dhcp-renewal-time 3600;
+    - option dhcp-rebinding-time 7200;
+    - allow leasequery;
+    - option dhcp6.info-refresh-time 21600;
+```
+
 ### Option: `networks` (one item required)
 
-This option defines settings for one or multiple networks for the DHCP server
+This option defines settings for one or multiple networks for the DHCPv6 server
 to hand out IP addresses for.
 
 At least one network definition in your configuration is required for the
-DHCP server to work.
+DHCPv6 server to work.
 
 #### Option: `networks.subnet`
 
-Your network schema/subnet. For example, if your IP addresses are `192.168.1.x`
-the subnet becomes `192.168.1.0`.
+Your network schema/subnet. For example, if your IP addresses are `fd00::xxxx:xxxx:xxxx:xxxx`
+the subnet becomes `fd00::/64`.
 
-#### Option: `networks.netmask`
+#### Option: `networks.ranges`
 
-Your network netmask. For example, if your IP addresses are `192.168.1.x` the
-netmask becomes `255.255.255.0`.
+Defines the start / end IP addresses for the DHCPv6 server to lease IPs for.
 
-#### Option: `networks.range_start`
+#### Option: `networks.prefixes`
 
-Defines the start IP address for the DHCP server to lease IPs for.
-Use this together with the `range_end` option to define the range of IP
-addresses the DHCP server operates in.
+Defines the prefixes that the DHCPv6 server will assign to the clients.
 
-#### Option: `networks.range_end`
+#### Option: `networks.extra`
 
-Defines the end IP address for the DHCP server to lease IPs for.
-
-#### Option: `networks.broadcast`
-
-The broadcast address specific to the lease range. For example, if your
-IP addresses are `192.168.1.x`, the broadcast address is usually `192.168.1.255`.
-
-#### Option: `networks.gateway`
-
-Sets the gateway address for that the DHCP server hands out to its clients.
-This is usually the IP address of your router.
-
-#### Option: `networks.interface`
-
-The network interface to listen to for this network, e.g., `eth0`.
+Here you can add additional configuration regarding the networks, followed by a semicolumn.
 
 ### Option: `hosts` (optional)
 
-This option defines settings for one or host definitions for the DHCP server.
+This option defines settings for one or host definitions for the DHCPv6 server.
 
-It allows you to fix a host to a specific IP address.
+It allows you to fix a host to a specific IPv6 address.
 
-By default, non are configured.
+By default, none are configured.
 
 #### Option: `hosts.name`
 
@@ -120,9 +128,17 @@ The name of the hostname you'd like to fix an address for.
 
 The MAC address of the client device.
 
+#### Option: `hosts.client_id`
+
+The Client ID of the client device.
+
 #### Option: `hosts.ip`
 
-The IP address you want the DHCP server to assign.
+The IPv6 address you want the DHCP server to assign.
+
+#### Option: `hosts.extra`
+
+Here you can add additional configuration regarding the hosts, followed by a semicolumn.
 
 ## Support
 
