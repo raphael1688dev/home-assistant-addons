@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1
+
+- Update Alpine to 3.19
+
 ## 2.0
 
 - Update DHCPD to 4.4.3-P1
