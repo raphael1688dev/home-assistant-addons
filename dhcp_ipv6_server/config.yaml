@@ -27,7 +27,7 @@ options:
     - allow leasequery;
     - option dhcp6.info-refresh-time 21600;
   networks:
-      interface: end0
+    - interface: end0
       subnet: 3ffe:501:ffff:100::/64
       ranges:
         - 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11
@@ -60,7 +60,7 @@ schema:
   extra:
     - str
   networks:
-      interface: str
+    - interface: str
       subnet: str
       ranges:
         - str
