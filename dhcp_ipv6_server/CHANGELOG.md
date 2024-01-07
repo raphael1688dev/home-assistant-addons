@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0
+
+- Allign config with original add-on
+- Re-add armhf and i386
+- Allow empty DNS value in config
+- Update DOCS
+
 ## 2.5
 
 - Update / Fix deployment
