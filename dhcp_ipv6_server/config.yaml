@@ -6,11 +6,9 @@ description: A simple DHCPv6 server
 url: https://github.com/martymarty004/home-assistant-addons
 advanced: true
 arch:
-  - armhf
-  - armv7
   - aarch64
   - amd64
-  - i386
+  - armv7
 host_network: true
 image: martymarty004/{arch}-addon-dhcp_ipv6_server
 options:
