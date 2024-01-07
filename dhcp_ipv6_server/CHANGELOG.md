@@ -1,9 +1,20 @@
 # Changelog
 
+## 3.4
+
+- Added codenotary
+
+## 3.3
+
+- More fixes
+
+## 3.2
+
+- Fixed config
+
 ## 3.1
 
 - Fixed startup script
-- Added codenotary
 
 ## 3.0
 
