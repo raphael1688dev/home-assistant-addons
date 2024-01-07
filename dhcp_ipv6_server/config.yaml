@@ -29,7 +29,6 @@ options:
     - subnet: "3ffe:501:ffff:100::/64"
       ranges:
         - "3ffe:501:ffff:100::10 3ffe:501:ffff:100::11"
-          "3ffe:501:ffff:100:: temporary"
       prefixes: "3ffe:501:ffff:100::, 3ffe:501:ffff:111:: /64"
       extra: []
   hosts:
@@ -39,26 +38,22 @@ options:
       prefixes: "3ffe:501:ffff:101::/64, 3ffe:501:ffff:102::/64"
       name_servers: "3ffe:501:ffff:100:200:ff:fe00:4f4e"
       extra: []
-
     - name: otherclient
       mac: "01:00:80:a2:55:67"
       address: "3ffe:501:ffff:100::4321"
       extra: []
-
 schema:
   default_lease: int
   max_lease: int
   domain: str
   name_servers: str
   extra: str?
-
   networks:
     - subnet: str
       ranges: str?
       prefixes: str?
       name_servers: str?
       extra: str?
-
   hosts:
     - name: str
       client_id: str?
