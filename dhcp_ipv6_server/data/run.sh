@@ -41,6 +41,7 @@ for network in $(bashio::config 'networks|keys'); do
     SUBNET=$(bashio::config "networks[${network}].subnet")
     RANGE=$(bashio::config "networks[${network}].ranges")
     PREFIX=$(bashio::config "networks[${network}].prefix")
+    INTERFACE=$(bashio::config "networks[${network}].interface")
 
     echo "subnet6 ${SUBNET} {" >> "${CONFIG}"
 
