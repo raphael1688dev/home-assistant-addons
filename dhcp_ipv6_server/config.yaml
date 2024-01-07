@@ -54,7 +54,7 @@ options:
 schema:
   default_lease: int
   max_lease: int
-  domain: str
+  domain: str?
   dns:
     - str
   extra:
@@ -67,18 +67,18 @@ schema:
       prefixes:
         - str
       name_servers:
-        - str
+        - str?
       extra:
-        - str
+        - str?
   hosts:
-    - name: str
-      client_id: str
-      mac: str
+    - name: str?
+      client_id: str?
+      mac: str?
       address:
-        - str
+        - str?
       prefixes:
-        - str
+        - str?
       name_servers:
-        - str
+        - str?
       extra:
-        - str
+        - str?
