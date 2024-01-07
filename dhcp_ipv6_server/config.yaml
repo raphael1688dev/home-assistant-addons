@@ -53,15 +53,23 @@ schema:
     - str
   networks:
     - subnet: str
-      ranges: str
-      prefixes: str
-      name_servers: str
-      extra: str
+      ranges: 
+        - str
+      prefixes: 
+        - str
+      name_servers: 
+        - str
+      extra: 
+        - str
   hosts:
     - name: str
       client_id: str
       mac: str
-      address: str
-      prefixes: str
-      name_servers: str
-      extra: str
+      address: 
+        - str
+      prefixes: 
+        - str
+      name_servers: 
+        - str
+      extra: 
+        - str
