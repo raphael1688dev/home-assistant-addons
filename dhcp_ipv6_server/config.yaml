@@ -1,5 +1,5 @@
 ---
-version: 2.5
+version: 3.0
 slug: dhcp_ipv6_server
 name: DHCPv6 server
 description: A simple DHCPv6 server
@@ -9,19 +9,23 @@ arch:
   - aarch64
   - amd64
   - armv7
+  - armhf
+  - i386
 host_network: true
 image: martymarty004/{arch}-addon-dhcp_ipv6_server
 options:
   default_lease: 86400
   max_lease: 172800
   domain: home.local
-  name_servers: "2001:4860:4860::8888, 2001:4860:4860::8844"
+  name_servers: 
+    - 2001:4860:4860::8888
+    - 2001:4860:4860::8844
   extra:
     - preferred-lifetime 604800;
-      option dhcp-renewal-time 3600;
-      option dhcp-rebinding-time 7200;
-      allow leasequery;
-      option dhcp6.info-refresh-time 21600;
+    - option dhcp-renewal-time 3600;
+    - option dhcp-rebinding-time 7200;
+    - allow leasequery;
+    - option dhcp6.info-refresh-time 21600;
   networks:
     - subnet: "3ffe:501:ffff:100::/64"
       ranges:
