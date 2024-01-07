@@ -1,82 +1,82 @@
 ---
-  name: DHCP IPv6 server
-  version: 2.5
-  slug: dhcp_ipv6_server
-  description: A simple DHCP IPv6 server
-  url: https://github.com/martymarty004/home-assistant-addons
-  arch:
-    - armhf
-    - armv7
-    - aarch64
-    - amd64
-    - i386
-  advanced: true
-  startup: system
-  host_network: true
-  image: martymarty004/{arch}-addon-dhcp_ipv6_server
-  options:
-    default_lease: 86400
-    max_lease: 172800
-    domain: home.local
-    name_servers: 2001:4860:4860::8888, 2001:4860:4860::8844
-    extra:
-      - preferred-lifetime 604800;
-        option dhcp-renewal-time 3600;
-        option dhcp-rebinding-time 7200;
-        allow leasequery;
-        option dhcp6.info-refresh-time 21600;
+name: DHCP IPv6 server
+version: 2.5
+slug: dhcp_ipv6_server
+description: A simple DHCP IPv6 server
+url: https://github.com/martymarty004/home-assistant-addons
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+advanced: true
+startup: system
+host_network: true
+image: martymarty004/{arch}-addon-dhcp_ipv6_server
+options:
+  default_lease: 86400
+  max_lease: 172800
+  domain: home.local
+  name_servers: "2001:4860:4860::8888, 2001:4860:4860::8844"
+  extra:
+    - preferred-lifetime 604800;
+      option dhcp-renewal-time 3600;
+      option dhcp-rebinding-time 7200;
+      allow leasequery;
+      option dhcp6.info-refresh-time 21600;
 
-    networks:
-        subnet: 3ffe:501:ffff:100::/64
-        ranges: 
-          - 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11
-            3ffe:501:ffff:100:: temporary
+  networks:
+      subnet: "3ffe:501:ffff:100::/64"
+      ranges:
+        - "3ffe:501:ffff:100::10 3ffe:501:ffff:100::11"
+          "3ffe:501:ffff:100:: temporary"
 
-        prefixes: 3ffe:501:ffff:100::, 3ffe:501:ffff:111:: /64
-        extra: []
+      prefixes: "3ffe:501:ffff:100::, 3ffe:501:ffff:111:: /64"
+      extra: []
 
-        subnet: 3ffe:501:ffff:101::/64"
-        ranges: 3ffe:501:ffff:101::10 3ffe:501:ffff:101::11
-        name_servers: 3ffe:501:ffff:101:200:ff:fe00:3f3e
-        extra: []
+      subnet: "3ffe:501:ffff:101::/64"
+      ranges: "3ffe:501:ffff:101::10 3ffe:501:ffff:101::11"
+      name_servers: "3ffe:501:ffff:101:200:ff:fe00:3f3e"
+      extra: []
 
-        subnet: 3ffe:501:ffff:102::/64
-        ranges: 3ffe:501:ffff:102::10 3ffe:501:ffff:102::11
-        extra: []
+      subnet: "3ffe:501:ffff:102::/64"
+      ranges: "3ffe:501:ffff:102::10 3ffe:501:ffff:102::11"
+      extra: []
 
-    hosts: 
-        name: myclient
-        client_id: 00:01:00:01:00:04:93:e0:00:00:00:00:a2:a2
-        addresses: 3ffe:501:ffff:100::1234
-        prefixes: 3ffe:501:ffff:101::/64, 3ffe:501:ffff:102::/64
-        name_servers: 3ffe:501:ffff:100:200:ff:fe00:4f4e
-        extra: []
+  hosts:
+      name: myclient
+      client_id: "00:01:00:01:00:04:93:e0:00:00:00:00:a2:a2"
+      addresses: "3ffe:501:ffff:100::1234"
+      prefixes: "3ffe:501:ffff:101::/64, 3ffe:501:ffff:102::/64"
+      name_servers: "3ffe:501:ffff:100:200:ff:fe00:4f4e"
+      extra: []
 
-        name: otherclient
-        mac: 01:00:80:a2:55:67
-        address: 3ffe:501:ffff:100::4321
-        extra: []
+      name: otherclient
+      mac: "01:00:80:a2:55:67"
+      address: "3ffe:501:ffff:100::4321"
+      extra: []
 
-  schema:
-    default_lease: int
-    max_lease: int
-    domain: str
-    name_servers: str
-    extra: str?
+schema:
+  default_lease: int
+  max_lease: int
+  domain: str
+  name_servers: str
+  extra: str?
 
-    networks:
-      - subnet: str
-        ranges: str?
-        prefixes: str?
-        name_servers: str?
-        extra: str?
+  networks:
+    - subnet: str
+      ranges: str?
+      prefixes: str?
+      name_servers: str?
+      extra: str?
 
-    hosts: 
-      - name: str
-        client_id: str?
-        mac: str?
-        address: str?
-        prefixes: str?
-        name_servers: str?
-        extra: str?
-
+  hosts:
+    - name: str
+      client_id: str?
+      mac: str?
+      address: str?
+      prefixes: str?
+      name_servers: str?
+      extra: str?
+      
