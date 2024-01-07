@@ -1,6 +1,6 @@
 ---
   name: DHCP IPv6 server
-  version: 2.4
+  version: 2.5
   slug: dhcp_ipv6_server
   description: A simple DHCP IPv6 server
   url: https://github.com/martymarty004/home-assistant-addons
