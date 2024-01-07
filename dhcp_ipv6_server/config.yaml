@@ -1,5 +1,5 @@
 ---
-version: "3.0"
+version: "3.1"
 slug: dhcp_ipv6_server
 name: DHCPv6 server
 description: A simple DHCPv6 server
@@ -27,21 +27,29 @@ options:
     - allow leasequery;
     - option dhcp6.info-refresh-time 21600;
   networks:
-    - subnet: "3ffe:501:ffff:100::/64"
+      interface: end0
+      subnet: 3ffe:501:ffff:100::/64
       ranges:
-        - "3ffe:501:ffff:100::10 3ffe:501:ffff:100::11"
-      prefixes: "3ffe:501:ffff:100::, 3ffe:501:ffff:111:: /64"
+        - 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11
+      prefixes: 
+        - "3ffe:501:ffff:100::"
+        - "3ffe:501:ffff:111:: /64"
       extra: []
   hosts:
     - name: myclient
-      client_id: "00:01:00:01:00:04:93:e0:00:00:00:00:a2:a2"
-      addresses: "3ffe:501:ffff:100::1234"
-      prefixes: "3ffe:501:ffff:101::/64, 3ffe:501:ffff:102::/64"
-      name_servers: "3ffe:501:ffff:100:200:ff:fe00:4f4e"
+      client_id: 00:01:00:01:00:04:93:e0:00:00:00:00:a2:a2
+      address: 
+        - 3ffe:501:ffff:100::1234
+      prefixes:
+        - "3ffe:501:ffff:101::/64"
+        - "3ffe:501:ffff:102::/64"
+      name_servers: 
+        - 3ffe:501:ffff:100:200:ff:fe00:4f4e
       extra: []
     - name: otherclient
       mac: "01:00:80:a2:55:67"
-      address: "3ffe:501:ffff:100::4321"
+      address: 
+        - 3ffe:501:ffff:100::4321
       extra: []
 schema:
   default_lease: int
@@ -52,7 +60,8 @@ schema:
   extra:
     - str
   networks:
-    - subnet: str
+      interface: str
+      subnet: str
       ranges: 
         - str
       prefixes: 
