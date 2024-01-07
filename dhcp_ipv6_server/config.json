@@ -1,9 +1,9 @@
 {
   "name": "DHCP IPv6 server",
-  "version": "1.2.3",
+  "version": "2.1",
   "slug": "dhcp_ipv6_server",
   "description": "A simple DHCP IPv6 server",
-  "url": "https://github.com/BohdanTkachenko/home-assistant-addons",
+  "url": "https://github.com/martymarty004/home-assistant-addons",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "advanced": true,
   "startup": "system",
