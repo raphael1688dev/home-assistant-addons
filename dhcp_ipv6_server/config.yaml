@@ -47,9 +47,9 @@ schema:
   default_lease: int
   max_lease: int
   domain: str
-  dns: 
+  dns:
     - str
-  extra: 
+  extra:
     - str
   networks:
     - subnet: str
