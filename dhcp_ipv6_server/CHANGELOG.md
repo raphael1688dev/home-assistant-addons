@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5
+
+- Update / Fix deployment
+
 ## 2.4
 
 - Fix builder
