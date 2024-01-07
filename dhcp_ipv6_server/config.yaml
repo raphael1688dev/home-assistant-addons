@@ -12,6 +12,8 @@ arch:
   - armhf
   - i386
 host_network: true
+startup: system
+init: false
 image: martymarty004/{arch}-addon-dhcp_ipv6_server
 options:
   default_lease: 86400
