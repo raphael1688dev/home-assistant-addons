@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0
+
+- Update DHCPD to 4.4.3-P1
+
 ## 1.2
 
 - Fixes crash when using FQDN as domain
