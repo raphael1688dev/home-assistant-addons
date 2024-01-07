@@ -13,20 +13,20 @@ MAX_LEASE=$(bashio::config 'max_lease')
 
 {
     echo "option dhcp6.domain-search \"${DOMAIN}\";"
-    echo "option dhcp6.name-servers ${NAME_SERVERS};";
+
+    # Create DNS Server List
+    if [ "$(bashio::config 'dns')" ]
+    then
+        DNS=$(bashio::config 'dns|join(", ")')
+    fi
+    
+    echo "option dhcp6.name-servers ${DNS};";
     echo "default-lease-time ${DEFAULT_LEASE};"
     echo "max-lease-time ${MAX_LEASE};"
     echo "authoritative;"
 } > "${CONFIG}"
 
-# Create DNS Server List
-if [ "$(bashio::config 'dns')" ]
-then
-    DNS=$(bashio::config 'dns|join(", ")')
-    {
-        echo "option domain-name-servers ${DNS};";
-    } >> "${CONFIG}"
-fi
+
 
 
 if bashio::config.has_value "extra"; then
